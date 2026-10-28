@@ -85,7 +85,7 @@ scripts/build_app.sh 1.0.0     # builds dist/Sound Outdoor EQ.app
 scripts/make_dmg.sh 1.0.0      # builds dist/SoundOutdoorEQ-1.0.0.dmg
 ```
 
-To publish a release with the DMG attached, push a tag such as `v1.0.0`. The **Build** workflow does the rest.
+To publish a release with the DMG attached, either push a tag such as `v1.0.0`, or go to **Actions → Build → Run workflow** and enter a version such as `1.0.1`. The workflow creates the tag and the release.
 
 ## Project layout
 
