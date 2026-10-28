@@ -14,7 +14,6 @@ The speaker's built-in sound can't be changed, so this app shapes the audio **on
 - Preamp, balance, and a mono mode (best with a single speaker)
 - Turns on by itself when the Xiaomi speaker is your output and steps aside for other devices. Can also be set to apply to every output.
 - Opens at login and remembers everything
-- **Spotify on iPhone** panel that converts your curve into Spotify's 6-band iPhone EQ
 
 Needs **macOS 14.2 or newer**, on Apple Silicon or Intel. No audio driver to install.
 
@@ -48,31 +47,13 @@ If boosting makes loud songs distort, lower the **Preamp** a few dB.
 - a specific device from the list
 - **Every output**: apply the EQ to whatever you're playing through
 
-## iPhone (Spotify)
+## iPhone
 
-iOS doesn't let any app change the sound of other apps, so there can't be an iPhone version of this app. For Spotify there are two good workarounds.
+iOS doesn't let any app change the sound of other apps, so nothing can apply one EQ to everything on an iPhone. Your options:
 
-### Near your Mac: play Spotify through the Mac (same EQ, full quality)
-
-1. Open Spotify on the Mac. It can stay in the background.
-2. On the iPhone, open Spotify, tap the **devices** icon on the player, and pick your **Mac**.
-3. The iPhone is now the remote. The Mac plays the music through this EQ to the speaker.
-
-Both need to be on the same Wi-Fi with the Mac awake. To make this effortless, turn on **Spotify on the Mac → Settings → Open Spotify automatically after you log into the computer**. Spotify's own iPhone EQ is skipped when playing to another device, which is what you want here.
-
-### Away from your Mac: copy your curve into Spotify's EQ
-
-Spotify on iPhone has its own 6-band equalizer (**Settings → Playback → Equalizer**), but its sliders have no numbers.
-
-1. In this app, open **Spotify on iPhone**. It converts your current curve into Spotify's six bands and draws the shape to match.
-2. On the iPhone, turn Spotify's equalizer on and drag the six dots to the same shape.
-3. **Copy Values** puts the numbers on your clipboard. With Handoff on, you can paste them on the iPhone, for example into Notes.
-
-Spotify's EQ has no limiter or speaker protection. If loud songs crackle on the speaker, drag all six dots down a little.
-
-### Other iPhone apps
-
-**AirPlay to the Mac** works for any app. Put both on the same Wi-Fi, open Control Center on the iPhone → AirPlay, and pick your Mac. If the Mac doesn't show up, turn on **System Settings → General → AirDrop & Handoff → AirPlay Receiver** on the Mac.
+- **Play through your Mac with AirPlay.** macOS can receive AirPlay. Put the iPhone and Mac on the same Wi-Fi. On the iPhone, open Control Center → AirPlay, and pick your Mac. The Mac plays it through this EQ to the speaker. If your Mac doesn't show up, turn on **System Settings → General → AirDrop & Handoff → AirPlay Receiver**.
+- **Spotify's built-in EQ** (Settings → Playback → Equalizer) works with any speaker, but only in Spotify.
+- Apple Music has a few fixed EQ presets (Settings → Apps → Music → EQ).
 
 ## How it works
 
