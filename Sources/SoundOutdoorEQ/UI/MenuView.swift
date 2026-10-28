@@ -45,9 +45,11 @@ struct MenuView: View {
 
     private var header: some View {
         HStack(alignment: .center, spacing: 10) {
-            Image(systemName: "hifispeaker.fill")
-                .font(.title2)
-                .foregroundStyle(model.isActive ? Color.accentColor : Color.secondary)
+            Image(nsImage: NSApp.applicationIconImage)
+                .resizable()
+                .frame(width: 34, height: 34)
+                .saturation(model.isActive ? 1 : 0)
+                .opacity(model.isActive ? 1 : 0.7)
             VStack(alignment: .leading, spacing: 2) {
                 Text("Sound Outdoor EQ").font(.headline)
                 HStack(spacing: 5) {
