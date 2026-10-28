@@ -99,4 +99,4 @@ To publish a release with the DMG attached, either push a tag such as `v1.0.0`, 
 
 ## Credits
 
-Created by **Ayush Agrawal** ([@theLivingSofa](https://github.com/theLivingSofa)): the idea, features and testing on the real speaker. Code written with [Claude Code](https://claude.com/claude-code).
+Created by **Ayush Agrawal** ([@theLivingSofa](https://github.com/theLivingSofa))
