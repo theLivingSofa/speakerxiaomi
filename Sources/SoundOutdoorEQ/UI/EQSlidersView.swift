@@ -12,7 +12,7 @@ struct EQSlidersView: View {
                 VStack(spacing: 4) {
                     Text(Self.gainLabel(gains[index]))
                         .font(.system(size: 9, weight: .medium).monospacedDigit())
-                        .foregroundStyle(gains[index] == 0 ? .secondary : .primary)
+                        .foregroundStyle(gains[index] == 0 ? Color.secondary : Color.primary)
                     VerticalSlider(value: binding(for: index), range: EQSettings.gainRange)
                         .frame(height: 120)
                     Text(Self.frequencyLabel(EQSettings.bandFrequencies[index]))
