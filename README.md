@@ -96,3 +96,7 @@ To publish a release with the DMG attached, either push a tag such as `v1.0.0`, 
 - `Tests/EQCoreTests/`: tests for the EQ math and settings.
 - `scripts/`: app bundle and DMG packaging.
 - `.github/workflows/build.yml`: builds, tests and packages on every push.
+
+## Credits
+
+Created by **Ayush Agrawal** ([@theLivingSofa](https://github.com/theLivingSofa)): the idea, features and testing on the real speaker. Code written with [Claude Code](https://claude.com/claude-code).

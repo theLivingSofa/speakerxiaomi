@@ -26,6 +26,8 @@
     <string>14.2</string>
     <key>LSApplicationCategoryType</key>
     <string>public.app-category.music</string>
+    <key>NSHumanReadableCopyright</key>
+    <string>© 2026 Ayush Agrawal</string>
     <key>LSUIElement</key>
     <true/>
     <key>NSHighResolutionCapable</key>
