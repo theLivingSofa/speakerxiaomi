@@ -47,7 +47,10 @@ enum AudioSystem {
         var addr = addr
         var result = initial
         var size = UInt32(MemoryLayout<T>.size)
-        try check(AudioObjectGetPropertyData(object, &addr, 0, nil, &size, &result), "Reading audio property")
+        let status = withUnsafeMutablePointer(to: &result) {
+            AudioObjectGetPropertyData(object, &addr, 0, nil, &size, $0)
+        }
+        try check(status, "Reading audio property")
         return result
     }
 

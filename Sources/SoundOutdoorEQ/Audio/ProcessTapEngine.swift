@@ -28,7 +28,7 @@ final class ProcessTapEngine {
         do {
             let ownProcess = try AudioSystem.ownProcessObject()
 
-            let tapDescription = CATapDescription(stereoGlobalTapButExcludeProcesses: [NSNumber(value: ownProcess)])
+            let tapDescription = CATapDescription(stereoGlobalTapButExcludeProcesses: [ownProcess])
             tapDescription.name = "Sound Outdoor EQ"
             tapDescription.isPrivate = true
             tapDescription.muteBehavior = .mutedWhenTapped
