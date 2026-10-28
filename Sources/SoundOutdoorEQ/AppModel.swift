@@ -186,13 +186,32 @@ final class AppModel: ObservableObject {
         }
         if old.enabled != config.enabled
             || old.deviceMatch != config.deviceMatch
-            || old.applyToAllOutputs != config.applyToAllOutputs {
+            || old.applyToAllOutputs != config.applyToAllOutputs
+            || old.keepMacMicrophone != config.keepMacMicrophone {
             refresh()
+        }
+    }
+
+    /// If the speaker's microphone has become the Mac's input, switch to the Mac's own mic.
+    /// A Bluetooth speaker whose mic is in use drops into low-quality call mode, which makes music sound muffled.
+    private func fixMicrophone() {
+        guard
+            let input = AudioSystem.defaultInputDevice(),
+            config.shouldReplaceMicrophone(named: input.name),
+            let mic = AudioSystem.builtInMicrophone(),
+            mic.id != input.id
+        else { return }
+        do {
+            try AudioSystem.setDefaultInputDevice(mic.id)
+            NSLog("Sound Outdoor EQ: switched microphone from \(input.name) to \(mic.name)")
+        } catch {
+            NSLog("Sound Outdoor EQ: couldn't switch microphone: \(error.localizedDescription)")
         }
     }
 
     /// Decides whether the EQ should run right now, and starts or stops it. Safe to call any time.
     func refresh() {
+        fixMicrophone()
         outputDevices = AudioSystem.outputDevices()
         let output = AudioSystem.defaultOutputDevice()
         currentOutput = output
@@ -254,7 +273,11 @@ final class AppModel: ObservableObject {
             MainActor.assumeIsolated { self?.scheduleRefresh() }
         }
         systemListener = block
-        for selector in [kAudioHardwarePropertyDefaultOutputDevice, kAudioHardwarePropertyDevices] {
+        for selector in [
+            kAudioHardwarePropertyDefaultOutputDevice,
+            kAudioHardwarePropertyDefaultInputDevice,
+            kAudioHardwarePropertyDevices,
+        ] {
             var addr = AudioSystem.address(selector)
             AudioObjectAddPropertyListenerBlock(AudioSystem.system, &addr, .main, block)
         }

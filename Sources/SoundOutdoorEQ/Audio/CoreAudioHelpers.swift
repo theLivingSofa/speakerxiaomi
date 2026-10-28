@@ -112,6 +112,35 @@ enum AudioSystem {
         return device(id)
     }
 
+    static func defaultInputDevice() -> AudioDevice? {
+        guard
+            let id = try? value(system, address(kAudioHardwarePropertyDefaultInputDevice), initial: AudioObjectID(kAudioObjectUnknown)),
+            id != kAudioObjectUnknown
+        else { return nil }
+        return device(id)
+    }
+
+    /// The Mac's own microphone, if it has one.
+    static func builtInMicrophone() -> AudioDevice? {
+        let ids = (try? objectIDs(system, address(kAudioHardwarePropertyDevices))) ?? []
+        for id in ids where channelCount(id, scope: kAudioObjectPropertyScopeInput) > 0 {
+            let transport = (try? value(id, address(kAudioDevicePropertyTransportType), initial: UInt32(0))) ?? 0
+            if transport == kAudioDeviceTransportTypeBuiltIn, let mic = device(id) {
+                return mic
+            }
+        }
+        return nil
+    }
+
+    static func setDefaultInputDevice(_ id: AudioObjectID) throws {
+        var addr = address(kAudioHardwarePropertyDefaultInputDevice)
+        var newValue = id
+        try check(
+            AudioObjectSetPropertyData(system, &addr, 0, nil, UInt32(MemoryLayout<AudioObjectID>.size), &newValue),
+            "Switching the microphone"
+        )
+    }
+
     static func nominalSampleRate(_ device: AudioObjectID) -> Double? {
         let rate = try? value(device, address(kAudioDevicePropertyNominalSampleRate), initial: Float64(0))
         guard let rate, rate > 0 else { return nil }

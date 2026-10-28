@@ -14,6 +14,7 @@ The speaker's built-in sound can't be changed, so this app shapes the audio **on
 - Preamp, balance, and a mono mode (best with a single speaker)
 - Turns on by itself when the Xiaomi speaker is your output and steps aside for other devices. Can also be set to apply to every output.
 - Opens at login and remembers everything
+- **Keeps the Mac's own microphone** in use, so the speaker's mic never drops Bluetooth into muffled call mode
 
 Needs **macOS 14.2 or newer**, on Apple Silicon or Intel. No audio driver to install.
 
@@ -73,7 +74,7 @@ If the app quits or crashes, macOS unmutes your apps automatically, so you never
 | Status says "Waiting for the Xiaomi speaker" | Make sure the speaker is your sound output (menu bar → Sound). Check the **Use with** setting. |
 | "The EQ couldn't start" | Click **Try Again**. Reconnecting the speaker also restarts it. |
 | Open at login doesn't stick | Click **Approve…**, or allow it in System Settings → General → Login Items. |
-| Sound gets worse during calls | That's Bluetooth switching to its low-quality call mode when the mic is in use, not the EQ. |
+| Music suddenly sounds muffled or mono | An app used the speaker's microphone, which switches Bluetooth into call mode. Keep **Use the Mac's microphone** on, or pick the MacBook microphone in System Settings → Sound → Input. |
 
 ## Building it yourself
 

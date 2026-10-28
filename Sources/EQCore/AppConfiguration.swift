@@ -11,6 +11,9 @@ public struct AppConfiguration: Codable, Equatable, Sendable {
     public var deviceMatch: String
     /// Apply the EQ to whatever the current output is, not just the speaker.
     public var applyToAllOutputs: Bool
+    /// When the speaker's microphone becomes the Mac's input, switch to the Mac's own mic.
+    /// Using a Bluetooth speaker's mic forces low-quality call mode, which makes music sound muffled.
+    public var keepMacMicrophone: Bool
     public var eq: EQSettings
     public var selectedPresetID: String?
     public var presets: PresetLibrary
@@ -19,6 +22,7 @@ public struct AppConfiguration: Codable, Equatable, Sendable {
         enabled: Bool = true,
         deviceMatch: String = AppConfiguration.defaultDeviceMatch,
         applyToAllOutputs: Bool = false,
+        keepMacMicrophone: Bool = true,
         eq: EQSettings = EQSettings.flat.applying(.outdoor),
         selectedPresetID: String? = Preset.outdoor.id,
         presets: PresetLibrary = PresetLibrary()
@@ -26,6 +30,7 @@ public struct AppConfiguration: Codable, Equatable, Sendable {
         self.enabled = enabled
         self.deviceMatch = deviceMatch
         self.applyToAllOutputs = applyToAllOutputs
+        self.keepMacMicrophone = keepMacMicrophone
         self.eq = eq
         self.selectedPresetID = selectedPresetID
         self.presets = presets
@@ -35,6 +40,16 @@ public struct AppConfiguration: Codable, Equatable, Sendable {
     public func shouldProcess(deviceNamed name: String) -> Bool {
         guard enabled else { return false }
         if applyToAllOutputs { return true }
+        return isSpeaker(name)
+    }
+
+    /// Whether the Mac's input should be moved off a microphone with this name.
+    public func shouldReplaceMicrophone(named name: String) -> Bool {
+        keepMacMicrophone && isSpeaker(name)
+    }
+
+    /// True when the device name contains the speaker match text.
+    public func isSpeaker(_ name: String) -> Bool {
         let match = deviceMatch.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !match.isEmpty else { return false }
         return name.range(of: match, options: [.caseInsensitive, .diacriticInsensitive]) != nil
@@ -47,7 +62,7 @@ public struct AppConfiguration: Codable, Equatable, Sendable {
     }
 
     private enum CodingKeys: String, CodingKey {
-        case enabled, deviceMatch, applyToAllOutputs, eq, selectedPresetID, presets
+        case enabled, deviceMatch, applyToAllOutputs, keepMacMicrophone, eq, selectedPresetID, presets
     }
 
     public init(from decoder: Decoder) throws {
@@ -57,6 +72,7 @@ public struct AppConfiguration: Codable, Equatable, Sendable {
             enabled: try c.decodeIfPresent(Bool.self, forKey: .enabled) ?? d.enabled,
             deviceMatch: try c.decodeIfPresent(String.self, forKey: .deviceMatch) ?? d.deviceMatch,
             applyToAllOutputs: try c.decodeIfPresent(Bool.self, forKey: .applyToAllOutputs) ?? d.applyToAllOutputs,
+            keepMacMicrophone: try c.decodeIfPresent(Bool.self, forKey: .keepMacMicrophone) ?? d.keepMacMicrophone,
             eq: try c.decodeIfPresent(EQSettings.self, forKey: .eq) ?? d.eq,
             selectedPresetID: try c.decodeIfPresent(String.self, forKey: .selectedPresetID),
             presets: try c.decodeIfPresent(PresetLibrary.self, forKey: .presets) ?? d.presets

@@ -211,6 +211,26 @@ final class SettingsTests: XCTestCase {
         XCTAssertFalse(config.shouldProcess(deviceNamed: "Xiaomi Sound Outdoor"))
     }
 
+    func testMicrophoneSwitching() {
+        var config = AppConfiguration()
+        XCTAssertTrue(config.shouldReplaceMicrophone(named: "Xiaomi Sound Outdoor"))
+        XCTAssertFalse(config.shouldReplaceMicrophone(named: "MacBook Air Microphone"))
+        XCTAssertFalse(config.shouldReplaceMicrophone(named: "Ayush's iPhone Microphone"))
+
+        // Works even with the EQ off or applied to every output: it's about call-mode audio quality.
+        config.enabled = false
+        config.applyToAllOutputs = true
+        XCTAssertTrue(config.shouldReplaceMicrophone(named: "Xiaomi Sound Outdoor"))
+
+        config.keepMacMicrophone = false
+        XCTAssertFalse(config.shouldReplaceMicrophone(named: "Xiaomi Sound Outdoor"))
+    }
+
+    func testMicrophoneSettingDefaultsOnForOlderSaves() {
+        let old = AppConfiguration.decode(Data(#"{"enabled": true}"#.utf8))
+        XCTAssertTrue(old.keepMacMicrophone)
+    }
+
     func testPresetLibrary() {
         var library = PresetLibrary()
         var eq = EQSettings()

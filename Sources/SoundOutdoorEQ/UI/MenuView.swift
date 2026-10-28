@@ -184,6 +184,8 @@ struct MenuView: View {
                 Toggle("Limiter", isOn: $model.config.eq.limiter)
                     .help("Stops loud boosted parts from clipping.")
             }
+            Toggle("Use the Mac's microphone", isOn: $model.config.keepMacMicrophone)
+                .help("Stops apps from using the speaker's microphone. That would switch Bluetooth into call mode and make music sound muffled.")
             HStack {
                 Text("Balance").foregroundStyle(.secondary)
                 Text("L").font(.caption).foregroundStyle(.secondary)
