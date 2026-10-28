@@ -14,6 +14,7 @@ struct MenuView: View {
 
     @State private var naming: Naming?
     @State private var nameText = ""
+    @State private var showSpotify = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -34,6 +35,11 @@ struct MenuView: View {
             optionsSection
             Divider()
             deviceRow
+            Divider()
+            DisclosureGroup("Spotify on iPhone", isExpanded: $showSpotify) {
+                SpotifyCopyView(settings: model.config.eq, presetName: model.config.activePreset?.name)
+                    .padding(.top, 6)
+            }
             Divider()
             footer
         }
